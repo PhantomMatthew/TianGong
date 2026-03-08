@@ -55,3 +55,43 @@ Successfully implemented the `Read` tool (file reading with offset/limit support
 - `go test -v ./internal/tool/... -run "TestRead"` ✓ (10/10 PASS)
 - LSP diagnostics: clean (no errors)
 
+
+## Task 8: PostgreSQL SessionStore Implementation
+
+### Implementation Details
+- Created `internal/session/postgres.go` with PostgresStore implementing SessionStore interface
+- Created `internal/session/postgres_test.go` with 12 integration tests using `//go:build integration` tag
+- All 5 SessionStore methods implemented using sqlc-generated code:
+  - CreateSession → sqlc.CreateSession
+  - GetSession → sqlc.GetSession  
+  - ListSessions → sqlc.ListSessions
+  - AddMessage → sqlc.AddMessage
+  - GetMessages → sqlc.GetMessagesBySession (with session existence check)
+
+### Key Patterns
+1. **Type Mapping**: sqlc types mapped to domain types via helper functions:
+   - `sqlcSessionToDomain()` - converts sqlc.Session to session.Session
+   - `sqlcMessageToDomain()` - converts sqlc.Message to session.Message
+   - Handles JSONB metadata/tool_calls marshaling/unmarshaling
+   - Handles pgtype.Text for optional tool_call_id field
+
+2. **Error Handling**: Maps pgx.ErrNoRows to domain error ErrSessionNotFound
+
+3. **ID Generation**: Reused existing generateID() from memory.go (avoided duplication)
+
+4. **Constructor Pattern**: Accepts `*sqlc.Queries` parameter (caller manages connection pool)
+
+5. **Integration Testing**: 
+   - Tests tagged with `//go:build integration`
+   - Skip if DATABASE_URL not set
+   - Clean up test data in teardown
+   - Cover all CRUD operations including edge cases (nonexistent sessions, empty sessions, tool calls)
+
+### Verification
+- ✓ Build succeeds without database
+- ✓ Integration tests skip without DATABASE_URL  
+- ✓ All 5 methods implemented
+- ✓ No raw SQL strings (verified with grep)
+- ✓ sqlc types contained (only exposed in constructor parameter)
+- ✓ Evidence saved to `.sisyphus/evidence/task-8-*.txt`
+
