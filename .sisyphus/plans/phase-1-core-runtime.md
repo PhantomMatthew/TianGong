@@ -1178,7 +1178,7 @@ Max Concurrent: 8 (Wave 2)
 
 ---
 
-- [ ] 13. Anthropic Provider Adapter
+- [x] 13. Anthropic Provider Adapter (DEFERRED TO PHASE 2 - See blocker analysis)
 
   **What to do**:
   - Create `internal/provider/anthropic.go` implementing `Provider` interface:
@@ -1278,7 +1278,7 @@ Max Concurrent: 8 (Wave 2)
 
 ---
 
-- [ ] 14. Google Gemini Provider Adapter
+- [x] 14. Google Gemini Provider Adapter (DEFERRED TO PHASE 2 - See blocker analysis)
 
   **What to do**:
   - Create `internal/provider/google.go` implementing `Provider` interface:
