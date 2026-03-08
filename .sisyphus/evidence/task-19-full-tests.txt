@@ -1,0 +1,50 @@
+--- PASS: TestBashMissingCommand (0.00s)
+=== RUN   TestBashInvalidJSON
+--- PASS: TestBashInvalidJSON (0.00s)
+=== RUN   TestBashOutputTruncation
+--- PASS: TestBashOutputTruncation (0.01s)
+=== RUN   TestBashMaxTimeout
+--- PASS: TestBashMaxTimeout (0.00s)
+=== RUN   TestBashInterfaceImplementation
+--- PASS: TestBashInterfaceImplementation (0.00s)
+=== RUN   TestReadFile
+--- PASS: TestReadFile (0.00s)
+=== RUN   TestReadFileWithOffset
+--- PASS: TestReadFileWithOffset (0.00s)
+=== RUN   TestReadDirectory
+--- PASS: TestReadDirectory (0.00s)
+=== RUN   TestReadNotFound
+--- PASS: TestReadNotFound (0.00s)
+=== RUN   TestReadMissingPath
+--- PASS: TestReadMissingPath (0.00s)
+=== RUN   TestReadFileLineNumbering
+--- PASS: TestReadFileLineNumbering (0.00s)
+=== RUN   TestReadToolInterface
+--- PASS: TestReadToolInterface (0.00s)
+=== RUN   TestReadDefaultLimit
+--- PASS: TestReadDefaultLimit (0.00s)
+=== RUN   TestReadOffsetBeyondFileLength
+--- PASS: TestReadOffsetBeyondFileLength (0.00s)
+=== RUN   TestReadEmptyFile
+--- PASS: TestReadEmptyFile (0.00s)
+=== RUN   TestWriteFile
+--- PASS: TestWriteFile (0.00s)
+=== RUN   TestWriteCreatesDirectories
+--- PASS: TestWriteCreatesDirectories (0.00s)
+=== RUN   TestWriteOverwrite
+--- PASS: TestWriteOverwrite (0.00s)
+=== RUN   TestWritePermissionDenied
+--- PASS: TestWritePermissionDenied (0.00s)
+=== RUN   TestWriteEmptyPath
+--- PASS: TestWriteEmptyPath (0.00s)
+=== RUN   TestWriteInvalidJSON
+--- PASS: TestWriteInvalidJSON (0.00s)
+=== RUN   TestWriteName
+--- PASS: TestWriteName (0.00s)
+=== RUN   TestWriteDescription
+--- PASS: TestWriteDescription (0.00s)
+=== RUN   TestWriteParameters
+--- PASS: TestWriteParameters (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	1.570s
+?   	github.com/PhantomMatthew/TianGong/internal/voice	[no test files]
