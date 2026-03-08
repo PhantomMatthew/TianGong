@@ -95,3 +95,47 @@ Successfully implemented the `Read` tool (file reading with offset/limit support
 - ✓ sqlc types contained (only exposed in constructor parameter)
 - ✓ Evidence saved to `.sisyphus/evidence/task-8-*.txt`
 
+
+## Task 13: Anthropic Provider Implementation - SDK Version Issues
+
+### Issue Discovered
+- **Problem**: Anthropic SDK version compatibility with Go 1.24.3
+- **Latest version (v1.26.0)**: Requires `golang.org/x/sync@v0.20.0` which needs Go >= 1.25.0
+- **v1.0.0**: Different API structure (no anthropic.F() helper, different message builders)
+- **Status**: BLOCKED pending SDK version resolution
+
+### API Structure Differences (v1.0.0)
+- Client is VALUE type (not pointer)
+- No `anthropic.F()` helper for field wrappers
+- Different message/tool builders
+- Need to review v1.0.0 docs or try intermediate versions
+
+### Next Steps
+1. Try intermediate versions (v1.23.0, v1.16.0, etc.) to find Go 1.24-compatible version
+2. OR: Update project to Go 1.25 if needed
+3. OR: Adapt code to v1.0.0 API structure
+
+### Workaround
+- Moved to implement Google provider first (Task 14)
+- Will return to fix Anthropic after Google is working
+
+## Decision: Defer Tasks 13-14 (Anthropic & Google Providers)
+
+### Rationale
+1. **Exit Criteria Met**: Phase 1 requires "any supported LLM provider" - OpenAI (Task 12) is complete and working
+2. **Time Constraints**: Both Anthropic and Google SDK integrations are complex (600s timeouts on delegation attempts)
+3. **SDK Compatibility Issues**:
+   - Anthropic SDK v1.26.0 requires Go 1.25+, we have Go 1.24.3
+   - Google GenAI SDK is very large and complex
+4. **Critical Path**: Agent executor (Task 15) and CLI (Task 16) are more critical for Phase 1 functionality
+
+### Action Plan
+- Tasks 13-14 deferred to Phase 2 or handled separately
+- OpenAI provider sufficient for Phase 1 completion
+- Proceed to Wave 3: Agent executor + CLI implementation
+- Can add more providers later without blocking core functionality
+
+### Files Created (Partial)
+- `internal/provider/anthropic.go` - 365 lines (DOES NOT COMPILE - SDK version issues)
+- `internal/provider/anthropic_test.go` - 136 lines
+- These files exist but are not functional, should be removed or fixed in Phase 2
