@@ -5,12 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	
+
 	"github.com/openai/openai-go/v3"
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/packages/param"
 	"github.com/openai/openai-go/v3/shared"
-	
+
 	"github.com/PhantomMatthew/TianGong/internal/config"
 )
 
@@ -94,7 +94,7 @@ func (p *OpenAIProvider) Chat(ctx context.Context, req *ChatRequest) (*ChatRespo
 		for i, t := range req.Tools {
 			paramsJSON, _ := json.Marshal(t.Parameters)
 			var parameters shared.FunctionParameters
-			json.Unmarshal(paramsJSON, &parameters)
+			_ = json.Unmarshal(paramsJSON, &parameters) // Best effort
 			tools[i] = openai.ChatCompletionFunctionTool(shared.FunctionDefinitionParam{
 				Name:        t.Name,
 				Description: param.NewOpt(t.Description),
@@ -102,25 +102,25 @@ func (p *OpenAIProvider) Chat(ctx context.Context, req *ChatRequest) (*ChatRespo
 			})
 		}
 	}
-	
+
 	model := req.Model
 	if model == "" {
 		model = p.model
 	}
-	
+
 	params := openai.ChatCompletionNewParams{
 		Model:    shared.ChatModel(model),
 		Messages: messages,
 	}
-	
+
 	if len(tools) > 0 {
 		params.Tools = tools
 	}
-	
+
 	if req.MaxTokens > 0 {
 		params.MaxTokens = param.NewOpt(int64(req.MaxTokens))
 	}
-	
+
 	if req.Temperature != nil {
 		params.Temperature = param.NewOpt(*req.Temperature)
 	}
@@ -211,7 +211,7 @@ func (p *OpenAIProvider) ChatStream(ctx context.Context, req *ChatRequest) (<-ch
 		for i, t := range req.Tools {
 			paramsJSON, _ := json.Marshal(t.Parameters)
 			var parameters shared.FunctionParameters
-			json.Unmarshal(paramsJSON, &parameters)
+			_ = json.Unmarshal(paramsJSON, &parameters) // Best effort
 			tools[i] = openai.ChatCompletionFunctionTool(shared.FunctionDefinitionParam{
 				Name:        t.Name,
 				Description: param.NewOpt(t.Description),
@@ -219,25 +219,25 @@ func (p *OpenAIProvider) ChatStream(ctx context.Context, req *ChatRequest) (<-ch
 			})
 		}
 	}
-	
+
 	model := req.Model
 	if model == "" {
 		model = p.model
 	}
-	
+
 	params := openai.ChatCompletionNewParams{
 		Model:    shared.ChatModel(model),
 		Messages: messages,
 	}
-	
+
 	if len(tools) > 0 {
 		params.Tools = tools
 	}
-	
+
 	if req.MaxTokens > 0 {
 		params.MaxTokens = param.NewOpt(int64(req.MaxTokens))
 	}
-	
+
 	if req.Temperature != nil {
 		params.Temperature = param.NewOpt(*req.Temperature)
 	}

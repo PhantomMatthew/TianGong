@@ -5,9 +5,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/PhantomMatthew/TianGong/internal/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/PhantomMatthew/TianGong/internal/config"
 )
 
 func TestLoadFromYAML(t *testing.T) {
