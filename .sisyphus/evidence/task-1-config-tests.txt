@@ -1,0 +1,17 @@
+=== RUN   TestLoadFromYAML
+2026/03/08 22:55:43 INFO loaded config file=/var/folders/px/1g9mh2jj4nq_nck2zzg5ptw40000gn/T/TestLoadFromYAML1743355024/001/tiangong.yaml
+--- PASS: TestLoadFromYAML (0.00s)
+=== RUN   TestLoadFromEnv
+2026/03/08 22:55:43 INFO no config file found, using defaults and env vars
+--- PASS: TestLoadFromEnv (0.00s)
+=== RUN   TestDefaults
+2026/03/08 22:55:43 INFO no config file found, using defaults and env vars
+--- PASS: TestDefaults (0.00s)
+=== RUN   TestValidation
+2026/03/08 22:55:43 INFO loaded config file=/var/folders/px/1g9mh2jj4nq_nck2zzg5ptw40000gn/T/TestValidation2202931491/001/tiangong.yaml
+--- PASS: TestValidation (0.00s)
+=== RUN   TestNestedEnvBinding
+2026/03/08 22:55:43 INFO no config file found, using defaults and env vars
+--- PASS: TestNestedEnvBinding (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/config	(cached)
