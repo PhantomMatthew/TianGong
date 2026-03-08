@@ -1,0 +1,11 @@
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - goimports
+    - misspell
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/PhantomMatthew/TianGong
