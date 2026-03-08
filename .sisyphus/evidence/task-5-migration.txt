@@ -1,0 +1,5 @@
+=== MIGRATION: 002_add_tool_call_id.up.sql ===
+ALTER TABLE messages ADD COLUMN tool_call_id TEXT;
+
+=== MIGRATION: 002_add_tool_call_id.down.sql ===
+ALTER TABLE messages DROP COLUMN tool_call_id;

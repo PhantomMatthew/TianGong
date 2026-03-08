@@ -1,0 +1,20 @@
+=== QUERY: internal/storage/queries/sessions.sql ===
+-- name: CreateSession :one
+INSERT INTO sessions (id, title, created_at, updated_at, metadata)
+VALUES ($1, $2, NOW(), NOW(), '{}'::JSONB)
+RETURNING *;
+
+-- name: GetSession :one
+SELECT * FROM sessions WHERE id = $1;
+
+-- name: ListSessions :many
+SELECT * FROM sessions ORDER BY updated_at DESC;
+
+=== QUERY: internal/storage/queries/messages.sql ===
+-- name: AddMessage :one
+INSERT INTO messages (id, session_id, role, content, tool_call_id, tool_calls, created_at)
+VALUES ($1, $2, $3, $4, $5, $6, NOW())
+RETURNING *;
+
+-- name: GetMessagesBySession :many
+SELECT * FROM messages WHERE session_id = $1 ORDER BY created_at ASC;
