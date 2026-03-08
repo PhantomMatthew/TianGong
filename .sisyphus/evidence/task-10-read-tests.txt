@@ -1,0 +1,22 @@
+=== RUN   TestReadFile
+--- PASS: TestReadFile (0.00s)
+=== RUN   TestReadFileWithOffset
+--- PASS: TestReadFileWithOffset (0.00s)
+=== RUN   TestReadDirectory
+--- PASS: TestReadDirectory (0.00s)
+=== RUN   TestReadNotFound
+--- PASS: TestReadNotFound (0.00s)
+=== RUN   TestReadMissingPath
+--- PASS: TestReadMissingPath (0.00s)
+=== RUN   TestReadFileLineNumbering
+--- PASS: TestReadFileLineNumbering (0.00s)
+=== RUN   TestReadToolInterface
+--- PASS: TestReadToolInterface (0.00s)
+=== RUN   TestReadDefaultLimit
+--- PASS: TestReadDefaultLimit (0.01s)
+=== RUN   TestReadOffsetBeyondFileLength
+--- PASS: TestReadOffsetBeyondFileLength (0.00s)
+=== RUN   TestReadEmptyFile
+--- PASS: TestReadEmptyFile (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	(cached)

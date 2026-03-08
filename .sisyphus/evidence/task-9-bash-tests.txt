@@ -1,0 +1,54 @@
+TASK 9: Bash Tool Implementation - Test Results
+===============================================
+
+Implementation: internal/tool/bash.go
+Test File: internal/tool/bash_test.go
+
+BUILD VERIFICATION
+------------------
+✓ go build ./internal/tool/... SUCCESS
+
+TEST RESULTS
+-----------
+✓ TestBashEcho - Executes echo command, captures output
+✓ TestBashExitCode - Non-zero exits return output + exit code (NOT Go error)
+✓ TestBashTimeout - 100ms timeout on sleep 10 → [TIMEOUT after] message
+✓ TestBashCombinedOutput - Both stdout and stderr captured
+✓ TestBashParameters - JSON schema validation (command required, timeout_ms optional)
+✓ TestBashName - Returns "bash"
+✓ TestBashDescription - Returns descriptive text
+✓ TestBashMissingCommand - Error when command is empty
+✓ TestBashInvalidJSON - Error on invalid JSON args
+✓ TestBashOutputTruncation - Output truncated to 32KB max
+✓ TestBashMaxTimeout - Timeout capped at 120s max
+✓ TestBashInterfaceImplementation - Implements Tool interface correctly
+
+TOTAL: 12 tests PASS in 0.376s
+
+IMPLEMENTATION DETAILS
+---------------------
+1. Name() → "bash"
+2. Description() → "Execute shell commands and capture output"
+3. Parameters() → JSON schema with command (required), timeout_ms (optional)
+4. Execute():
+   - Parses JSON args (command, timeout_ms)
+   - Uses exec.CommandContext(ctx, "sh", "-c", command)
+   - Combines stdout + stderr with CombinedOutput()
+   - Default timeout: 30s, Max timeout: 120s
+   - Non-zero exits: returns output + "[EXIT CODE: N]" string (NO Go error)
+   - Timeout: returns partial output + "[TIMEOUT after Ns]"
+   - Output truncated to 32KB maximum
+   - Trailing newlines trimmed
+
+CONFORMANCE
+-----------
+✓ Implements Tool interface (Name, Description, Parameters, Execute)
+✓ Uses exec.CommandContext for timeout support
+✓ Handles timeouts via context deadline
+✓ Returns non-zero exit codes in string result (not Go error)
+✓ Captures combined stdout + stderr
+✓ Truncates output to 32KB
+✓ All imports properly organized (stdlib → external → internal)
+✓ Doc comments on exported symbols
+✓ No linter warnings
+✓ Error handling: returns error only for system failures, not exit codes

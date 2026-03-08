@@ -1,0 +1,116 @@
+# Task 7: In-Memory SessionStore - Evidence Report
+
+## Summary
+Successfully implemented `MemoryStore` - an in-memory, thread-safe implementation of the `SessionStore` interface for TianGong session management.
+
+## Files Created
+1. **internal/session/memory.go** (153 lines)
+   - `MemoryStore` struct with concurrent-safe map storage (sync.RWMutex)
+   - `NewMemoryStore()` constructor
+   - `CreateSession()` - generates unique IDs using crypto/rand + encoding/hex
+   - `GetSession()` - returns ErrSessionNotFound for missing sessions
+   - `ListSessions()` - returns all sessions sorted by UpdatedAt descending
+   - `AddMessage()` - updates session timestamp, validates session exists
+   - `GetMessages()` - returns messages in chronological order
+   - `generateID()` helper - 16 bytes → 32 hex characters
+
+2. **internal/session/memory_test.go** (244 lines)
+   - 9 test functions covering all scenarios:
+     * TestCreateSession - field validation
+     * TestGetSession - success and error cases
+     * TestAddAndGetMessages - message storage, ordering, error handling
+     * TestListSessions - sorting and completeness
+     * TestListSessionsEmpty - edge case
+     * TestSessionIDUniqueness - ID collision detection
+     * TestMessagePreservesOrder - chronological ordering
+     * TestMessageIDGeneration - ID format verification
+     * TestConcurrentAccess - race condition detection
+
+## Code Quality Verification
+
+### Compilation
+✓ `go build ./internal/session/...` - SUCCESS (no errors)
+
+### Testing
+✓ `go test -v ./internal/session/...` - 9/9 PASS
+  - TestCreateSession (0.00s)
+  - TestGetSession (0.00s)
+  - TestAddAndGetMessages (0.01s)
+  - TestListSessions (0.03s)
+  - TestListSessionsEmpty (0.00s)
+  - TestSessionIDUniqueness (0.00s)
+  - TestMessagePreservesOrder (0.00s)
+  - TestMessageIDGeneration (0.00s)
+  - TestConcurrentAccess (0.00s)
+
+### Race Detection
+✓ `go test -race ./internal/session/...` - NO RACES DETECTED
+  Runtime: 1.683s (with race detector overhead)
+
+### Linting
+✓ `go vet ./internal/session/...` - NO ERRORS
+✓ `gofmt -l internal/session/*.go` - COMPLIANT (no formatting issues)
+
+## Implementation Details
+
+### Concurrency
+- Uses `sync.RWMutex` for lock management (following bus.go pattern)
+- Read operations: `RLock()` + defer `RUnlock()`
+- Write operations: `Lock()` + defer `Unlock()`
+- No deadlocks, all locks properly deferred
+- TestConcurrentAccess validates 10 parallel message additions
+
+### ID Generation
+- Method: `crypto/rand.Read()` + `encoding/hex.EncodeToString()`
+- Format: 16 random bytes → 32 hex characters
+- No external UUID libraries used
+- Each ID verified to be unique and properly formatted
+
+### Data Structures
+- Sessions: `map[string]*Session` - O(1) lookup
+- Messages: `map[string][]*Message` - maintains insertion order
+- Sorted list output in ListSessions (by UpdatedAt descending)
+
+### Error Handling
+- Custom error type: `ErrSessionNotFound`
+- All errors wrapped with `fmt.Errorf("context: %w", err)`
+- Proper error propagation in ID generation failures
+
+### Testing Coverage
+- Table-driven patterns not needed (single-value operations)
+- Using testify/assert for all assertions
+- Edge cases: empty lists, non-existent sessions, ID collisions
+- Concurrent access stress test (10 goroutines)
+- Timestamp ordering verification
+
+## Compliance Checklist
+✓ All SessionStore interface methods implemented (5/5)
+✓ crypto/rand + encoding/hex for ID generation (NO external UUID libs)
+✓ sync.RWMutex for thread safety (following bus.go pattern)
+✓ Proper error types and wrapping (ErrSessionNotFound)
+✓ ≥4 test functions (9 functions implemented)
+✓ Race detector passing (go test -race)
+✓ All exports have doc comments
+✓ No commented-out code
+✓ Import grouping: stdlib → external → internal
+✓ No unused imports or variables
+✓ Code follows AGENTS.md conventions
+
+## Performance Notes
+- No persistence layer (in-memory, data lost on process exit - as designed)
+- No TTL or eviction logic (as required)
+- List sorting O(n log n) - acceptable for typical session counts
+- GetMessages returns copy to prevent external mutation
+
+## Testing Methodology
+- TestCreateSession validates timestamp initialization and ID generation
+- TestGetSession covers both hit and miss scenarios
+- TestAddAndGetMessages validates ordering, timestamp updates, and error handling
+- TestListSessions verifies sorting with realistic update scenarios
+- TestConcurrentAccess with 10 parallel goroutines ensures no race conditions
+- All tests deterministic (no timing-dependent failures)
+
+---
+**Status**: ✓ COMPLETE - All requirements satisfied
+**Date**: 2026-03-08
+**Runtime**: Tests complete in <2s, race detector in ~1.7s
