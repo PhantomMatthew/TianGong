@@ -3,6 +3,7 @@ module github.com/PhantomMatthew/TianGong
 go 1.24.3
 
 require (
+	github.com/anthropics/anthropic-sdk-go v1.23.0
 	github.com/go-playground/validator/v10 v10.30.1
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/openai/openai-go/v3 v3.26.0
