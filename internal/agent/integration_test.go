@@ -164,7 +164,7 @@ func TestFullPipeline(t *testing.T) {
 
 	// Setup: Tool registry
 	toolRegistry := tool.NewRegistry()
-	toolRegistry.Register(mockTool)
+	_ = toolRegistry.Register(mockTool) // Cannot fail in tests
 
 	// Setup: In-memory session store
 	store := session.NewMemoryStore()
@@ -315,7 +315,7 @@ func TestToolError(t *testing.T) {
 	}
 
 	toolRegistry := tool.NewRegistry()
-	toolRegistry.Register(mockTool)
+	_ = toolRegistry.Register(mockTool) // Cannot fail in tests
 
 	store := session.NewMemoryStore()
 	sess, err := store.CreateSession(context.Background(), "tool-error-test")
@@ -415,7 +415,7 @@ func TestMaxIterations(t *testing.T) {
 	}
 
 	toolRegistry := tool.NewRegistry()
-	toolRegistry.Register(mockTool)
+	_ = toolRegistry.Register(mockTool) // Cannot fail in tests
 
 	store := session.NewMemoryStore()
 	sess, err := store.CreateSession(context.Background(), "max-iterations-test")
