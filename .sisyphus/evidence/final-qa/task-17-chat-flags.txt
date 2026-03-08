@@ -1,0 +1,40 @@
+Start an interactive chat session with the TianGong AI agent.
+
+The chat command initializes a conversational session where you can send
+messages to the agent and receive streaming responses. The agent has access
+to tools (bash, read, write) and can execute commands on your behalf.
+
+Examples:
+  # Start a chat session with the default provider
+  tg chat
+
+  # Use a specific provider
+  tg chat --provider openai
+
+  # Override the model
+  tg chat --provider openai --model gpt-4-turbo
+
+  # Resume a previous session
+  tg chat --continue session_abc123
+
+Configuration:
+  Set up providers via environment variables:
+    TIANGONG_PROVIDERS_OPENAI_API_KEY=sk-...
+    TIANGONG_PROVIDERS_OPENAI_MODEL=gpt-4o
+
+  Or via config file (./tiangong.yaml, ~/.config/tiangong/tiangong.yaml):
+    providers:
+      openai:
+        api_key: sk-...
+        model: gpt-4o
+
+Press Ctrl+C to exit the session.
+
+Usage:
+  tg chat [flags]
+
+Flags:
+      --continue string   Session ID to resume
+  -h, --help              help for chat
+      --model string      Model name (overrides provider default)
+      --provider string   Provider name (openai, anthropic, google)

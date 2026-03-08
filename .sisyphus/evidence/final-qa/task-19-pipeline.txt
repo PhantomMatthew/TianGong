@@ -1,0 +1,11 @@
+=== RUN   TestFullPipeline
+2026/03/09 01:05:08 INFO agent react iteration iteration=0 session_id=b0a3884e0fd18279de1382939cccc61a
+2026/03/09 01:05:08 INFO stream finished finish_reason=tool_calls tool_calls=1
+2026/03/09 01:05:08 INFO executing tool calls count=1
+2026/03/09 01:05:08 INFO tool executed tool=echo result_length=18
+2026/03/09 01:05:08 INFO agent react iteration iteration=1 session_id=b0a3884e0fd18279de1382939cccc61a
+2026/03/09 01:05:08 INFO stream finished finish_reason=stop tool_calls=0
+2026/03/09 01:05:08 INFO agent completed successfully iterations=2
+--- PASS: TestFullPipeline (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	(cached)

@@ -1,0 +1,4 @@
+=== RUN   TestGetSession
+--- PASS: TestGetSession (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/session	0.256s

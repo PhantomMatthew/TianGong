@@ -207,4 +207,3 @@ func sqlcMessageToDomain(m *sqlc.Message) (*Message, error) {
 		CreatedAt:  m.CreatedAt.Time,
 	}, nil
 }
-

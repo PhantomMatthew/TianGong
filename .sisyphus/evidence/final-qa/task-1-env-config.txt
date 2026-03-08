@@ -1,0 +1,5 @@
+=== RUN   TestLoadFromEnv
+2026/03/09 01:20:54 INFO no config file found, using defaults and env vars
+--- PASS: TestLoadFromEnv (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/config	0.936s

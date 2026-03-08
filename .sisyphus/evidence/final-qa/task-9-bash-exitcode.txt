@@ -1,0 +1,4 @@
+=== RUN   TestBashExitCode
+--- PASS: TestBashExitCode (0.01s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.267s

@@ -1,0 +1,176 @@
+TASK 16 VERIFICATION EVIDENCE
+==============================
+
+Task: Agent Executor (ReAct Loop)
+Implementation: Manual (orchestrator) after 600s delegation timeout
+Commit: 3a1d953
+
+FILES CREATED:
+- internal/agent/agent.go (236 lines)
+- internal/agent/agent_test.go (351 lines)
+
+TEST RESULTS:
+=============
+$ go test -v ./internal/agent/...
+=== RUN   TestNew
+=== RUN   TestNew/applies_defaults
+=== RUN   TestNew/uses_provided_config
+--- PASS: TestNew (0.00s)
+=== RUN   TestRunStream_SimpleChat
+--- PASS: TestRunStream_SimpleChat (0.00s)
+=== RUN   TestRunStream_ToolCall
+--- PASS: TestRunStream_ToolCall (0.00s)
+=== RUN   TestRunStream_MaxIterations
+--- PASS: TestRunStream_MaxIterations (0.00s)
+=== RUN   TestRunStream_UnknownTool
+--- PASS: TestRunStream_UnknownTool (0.00s)
+=== RUN   TestRunStream_HistoryLimit
+--- PASS: TestRunStream_HistoryLimit (0.00s)
+=== RUN   TestDefaultSystemPrompt
+--- PASS: TestDefaultSystemPrompt (0.00s)
+=== RUN   TestFormatSystemPromptCustom
+--- PASS: TestFormatSystemPromptCustom (0.00s)
+=== RUN   TestFormatSystemPromptDefault
+--- PASS: TestFormatSystemPromptDefault (0.00s)
+=== RUN   TestFormatSystemPromptWithTools
+--- PASS: TestFormatSystemPromptWithTools (0.00s)
+=== RUN   TestFormatSystemPromptEmptyTools
+--- PASS: TestFormatSystemPromptEmptyTools (0.00s)
+=== RUN   TestBuildMessages
+--- PASS: TestBuildMessages (0.00s)
+=== RUN   TestBuildMessagesEmptyHistory
+--- PASS: TestBuildMessagesEmptyHistory (0.00s)
+=== RUN   TestBuildMessagesPreservesToolCalls
+--- PASS: TestBuildMessagesPreservesToolCalls (0.00s)
+=== RUN   TestBuildMessagesRoleMapping
+=== RUN   TestBuildMessagesRoleMapping/User_role
+=== RUN   TestBuildMessagesRoleMapping/Assistant_role
+=== RUN   TestBuildMessagesRoleMapping/System_role
+=== RUN   TestBuildMessagesRoleMapping/Tool_role
+--- PASS: TestBuildMessagesRoleMapping (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	0.678s
+
+BUILD VERIFICATION:
+==================
+$ go build ./...
+[SUCCESS - no errors]
+
+LINTER VERIFICATION:
+===================
+$ golangci-lint run ./internal/agent/...
+[SUCCESS - no warnings]
+
+LSP DIAGNOSTICS:
+===============
+$ lsp_diagnostics internal/agent/agent.go
+No diagnostics found
+
+IMPLEMENTATION DETAILS:
+======================
+1. Agent struct:
+   - provider: LLM provider interface
+   - tools: Tool registry
+   - store: SessionStore interface
+   - config: AgentConfig (MaxIterations, HistoryLimit, SystemPrompt)
+
+2. New() constructor:
+   - Applies default MaxIterations=10
+   - Applies default HistoryLimit=50
+   - Returns configured Agent
+
+3. RunStream() ReAct loop:
+   - Adds user message to session
+   - Iterates with max iterations guard (default 10)
+   - Each iteration:
+     * Gets message history
+     * Applies history limit (keeps last N messages)
+     * Builds system prompt with tools via FormatSystemPrompt()
+     * Builds provider messages via BuildMessages()
+     * Calls provider.ChatStream()
+     * Streams text deltas to writer
+     * If finish_reason=tool_calls:
+       - Executes tools sequentially (no parallel)
+       - Adds tool results to session
+       - Continues loop
+     * If finish_reason=stop:
+       - Adds assistant message
+       - Returns success
+     * If finish_reason=max_tokens:
+       - Treats as completion
+       - Returns success
+   - If max iterations reached: returns error
+
+4. executeTool() helper:
+   - Looks up tool in registry
+   - Returns error if unknown tool
+   - Executes tool with JSON arguments
+   - Returns result or error
+
+5. Error Handling:
+   - Provider errors: propagated immediately
+   - Tool execution errors: converted to error message as tool result
+   - Unknown tools: error message added as tool result
+   - Max iterations: descriptive error returned
+   - Stream errors: propagated immediately
+
+6. Logging (log/slog):
+   - Iteration start (iteration #, session ID)
+   - Stream finish (finish_reason, tool_calls count)
+   - Tool execution (tool name, result length)
+   - Tool failures (tool name, error)
+   - Agent completion (iterations count)
+
+7. Tests (6 scenarios):
+   - TestNew: default and custom config
+   - TestRunStream_SimpleChat: basic conversation without tools
+   - TestRunStream_ToolCall: single tool call execution
+   - TestRunStream_MaxIterations: iteration guard enforcement
+   - TestRunStream_UnknownTool: unknown tool error handling
+   - TestRunStream_HistoryLimit: history truncation
+
+VERIFICATION CHECKLIST:
+======================
+[x] Files created: agent.go, agent_test.go
+[x] All tests pass (14 total: 6 new agent + 8 existing prompt)
+[x] Build succeeds
+[x] Linter passes (no warnings)
+[x] LSP diagnostics clean
+[x] Follows existing patterns (internal/provider/openai.go)
+[x] Uses log/slog for logging
+[x] No parallel tool execution (per plan constraint)
+[x] No context compaction (per plan constraint)
+[x] No sub-agent spawning (per plan constraint)
+[x] No automatic retries (per plan constraint)
+[x] Max iterations guard implemented (default 10)
+[x] History limit implemented (default 50)
+[x] ReAct loop: Reason -> Act -> Observe
+[x] Sequential tool execution
+[x] Unknown tool handling
+[x] Provider error propagation
+[x] Streaming to writer
+[x] Commit created: 3a1d953
+
+PATTERNS USED:
+==============
+- Streaming: Followed internal/provider/openai.go goroutine + channel pattern
+- Error handling: fmt.Errorf wrapping with context
+- Logging: log/slog with structured fields
+- Testing: testify/assert and testify/require
+- Mock provider: Channel-based streaming simulation
+- Mock tool: Simple result/error return
+
+NEXT TASK:
+==========
+Task 17: CLI command `tg chat`
+- Interactive CLI with streaming output
+- Agent.RunStream() integration
+- Session management (new/resume)
+- Ctrl+C handling
+
+CONCLUSION:
+===========
+Task 16 COMPLETE and VERIFIED.
+Agent executor implements full ReAct loop with tool calling,
+streaming output, and comprehensive error handling.
+All acceptance criteria met.

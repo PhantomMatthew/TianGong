@@ -1,0 +1,12 @@
+=== RUN   TestToolError
+2026/03/09 01:23:24 INFO agent react iteration iteration=0 session_id=c63590a871e93ad597f85ef3bd8768ae
+2026/03/09 01:23:24 INFO stream finished finish_reason=tool_calls tool_calls=1
+2026/03/09 01:23:24 INFO executing tool calls count=1
+2026/03/09 01:23:24 WARN tool execution failed tool=failing-tool error="tool execution error: tool execution failed: invalid input"
+2026/03/09 01:23:24 INFO tool executed tool=failing-tool result_length=65
+2026/03/09 01:23:24 INFO agent react iteration iteration=1 session_id=c63590a871e93ad597f85ef3bd8768ae
+2026/03/09 01:23:24 INFO stream finished finish_reason=stop tool_calls=0
+2026/03/09 01:23:24 INFO agent completed successfully iterations=2
+--- PASS: TestToolError (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	0.287s

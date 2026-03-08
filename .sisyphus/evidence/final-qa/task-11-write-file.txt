@@ -1,0 +1,4 @@
+=== RUN   TestWriteFile
+--- PASS: TestWriteFile (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.255s

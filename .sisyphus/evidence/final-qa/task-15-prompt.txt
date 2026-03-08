@@ -1,0 +1,4 @@
+=== RUN   TestDefaultSystemPrompt
+--- PASS: TestDefaultSystemPrompt (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	0.517s

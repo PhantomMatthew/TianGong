@@ -1,0 +1,5 @@
+=== RUN   TestLoadFromYAML
+2026/03/09 01:20:54 INFO loaded config file=/var/folders/px/1g9mh2jj4nq_nck2zzg5ptw40000gn/T/TestLoadFromYAML1428088888/001/tiangong.yaml
+--- PASS: TestLoadFromYAML (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/config	0.732s

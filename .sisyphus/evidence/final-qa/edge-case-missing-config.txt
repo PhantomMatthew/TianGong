@@ -1,0 +1,10 @@
+2026/03/09 01:23:30 INFO no config file found, using defaults and env vars
+providers: {}
+server:
+    host: 127.0.0.1
+    port: 8080
+agent:
+    systemprompt: |-
+        You are a helpful AI assistant with access to tools.
+        Use tools when needed to accomplish tasks. Be concise and accurate.
+    maxiterations: 10

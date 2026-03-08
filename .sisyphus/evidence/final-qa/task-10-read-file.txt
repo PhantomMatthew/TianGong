@@ -1,0 +1,8 @@
+=== RUN   TestReadFile
+--- PASS: TestReadFile (0.00s)
+=== RUN   TestReadFileWithOffset
+--- PASS: TestReadFileWithOffset (0.00s)
+=== RUN   TestReadFileLineNumbering
+--- PASS: TestReadFileLineNumbering (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.301s

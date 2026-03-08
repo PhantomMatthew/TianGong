@@ -1,0 +1,4 @@
+=== RUN   TestBashEcho
+--- PASS: TestBashEcho (0.01s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.538s

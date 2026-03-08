@@ -1,0 +1,4 @@
+=== RUN   TestAddAndGetMessages
+--- PASS: TestAddAndGetMessages (0.01s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/session	0.268s
