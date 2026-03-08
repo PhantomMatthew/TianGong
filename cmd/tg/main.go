@@ -23,6 +23,7 @@ var versionCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(chatCmd)
+	rootCmd.AddCommand(configCmd)
 }
 
 func main() {
