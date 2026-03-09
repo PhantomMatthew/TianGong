@@ -1,0 +1,5 @@
+=== RUN   TestValidation
+2026/03/09 01:20:55 INFO loaded config file=/var/folders/px/1g9mh2jj4nq_nck2zzg5ptw40000gn/T/TestValidation3247509751/001/tiangong.yaml
+--- PASS: TestValidation (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/config	1.124s

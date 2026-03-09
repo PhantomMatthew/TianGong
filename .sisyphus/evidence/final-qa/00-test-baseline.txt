@@ -1,0 +1,24 @@
+go test ./...
+?   	github.com/PhantomMatthew/TianGong/cmd/tg	[no test files]
+?   	github.com/PhantomMatthew/TianGong/cmd/tiangong	[no test files]
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	(cached)
+ok  	github.com/PhantomMatthew/TianGong/internal/bus	(cached)
+?   	github.com/PhantomMatthew/TianGong/internal/canvas	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/channel	[no test files]
+ok  	github.com/PhantomMatthew/TianGong/internal/config	(cached)
+ok  	github.com/PhantomMatthew/TianGong/internal/gateway	(cached)
+?   	github.com/PhantomMatthew/TianGong/internal/hooks	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/i18n	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/mcp	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/media	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/memory	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/plugin	[no test files]
+ok  	github.com/PhantomMatthew/TianGong/internal/provider	(cached)
+?   	github.com/PhantomMatthew/TianGong/internal/scheduler	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/security	[no test files]
+ok  	github.com/PhantomMatthew/TianGong/internal/session	(cached)
+?   	github.com/PhantomMatthew/TianGong/internal/skill	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/storage	[no test files]
+?   	github.com/PhantomMatthew/TianGong/internal/storage/sqlc	[no test files]
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	(cached)
+?   	github.com/PhantomMatthew/TianGong/internal/voice	[no test files]

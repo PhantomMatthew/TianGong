@@ -1,0 +1,2 @@
+go build -o bin/tiangong ./cmd/tiangong
+go build -o bin/tg ./cmd/tg

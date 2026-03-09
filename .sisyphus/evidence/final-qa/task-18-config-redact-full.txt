@@ -1,0 +1,28 @@
+2026/03/09 01:22:41 INFO no config file found, using defaults and env vars
+Error: failed to load config: config validation failed: Key: 'Config.Providers[openai].Model' Error:Field validation for 'Model' failed on the 'required' tag
+Usage:
+  tg config show [flags]
+
+Flags:
+  -h, --help   help for show
+
+2026/03/09 01:22:46 INFO no config file found, using defaults and env vars
+providers:
+    openai:
+        name: openai
+        apikey: '***'
+        model: gpt-4o
+        endpoint: ""
+        timeout: 0s
+server:
+    host: 127.0.0.1
+    port: 8080
+agent:
+    systemprompt: |-
+        You are a helpful AI assistant with access to tools.
+        Use tools when needed to accomplish tasks. Be concise and accurate.
+    maxiterations: 10
+    historylimit: 50
+    timeout: 30s
+database:
+    url: ""

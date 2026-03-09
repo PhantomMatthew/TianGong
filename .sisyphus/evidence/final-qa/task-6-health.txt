@@ -1,0 +1,4 @@
+=== RUN   TestHealthEndpoint
+--- PASS: TestHealthEndpoint (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/gateway	0.518s

@@ -1,0 +1,7 @@
+=== Task 4: Tool Interface + Registry ===
+
+Build output:
+✓ Build succeeded
+
+Vet output:
+✓ Vet succeeded

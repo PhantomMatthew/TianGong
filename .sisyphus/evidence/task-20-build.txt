@@ -1,0 +1,6 @@
+go build -o bin/tiangong ./cmd/tiangong
+go build -o bin/tg ./cmd/tg
+Binaries:
+total 76784
+-rwxr-xr-x@ 1 matthew  staff    34M Mar  9 00:58 tg
+-rwxr-xr-x@ 1 matthew  staff   3.3M Mar  9 00:58 tiangong

@@ -1,0 +1,4 @@
+=== RUN   TestReadNotFound
+--- PASS: TestReadNotFound (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.257s

@@ -1,0 +1,4 @@
+=== RUN   TestWriteCreatesDirectories
+--- PASS: TestWriteCreatesDirectories (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.256s

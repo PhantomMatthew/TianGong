@@ -1,0 +1,15 @@
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	(cached)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/bus	0.237s
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/config	0.397s
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/gateway	(cached)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/provider	0.525s
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/session	(cached)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	(cached)
+      23

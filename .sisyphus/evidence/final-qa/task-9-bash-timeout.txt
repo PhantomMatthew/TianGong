@@ -1,0 +1,4 @@
+=== RUN   TestBashTimeout
+--- PASS: TestBashTimeout (0.10s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/tool	0.443s

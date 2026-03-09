@@ -1,0 +1,49 @@
+Task 8: PostgreSQL SessionStore - COMPLETE
+==========================================
+
+FILES CREATED:
+1. internal/session/postgres.go (212 lines)
+   - PostgresStore struct implementing SessionStore interface
+   - Constructor: NewPostgresStore(*sqlc.Queries)
+   - 5 interface methods implemented
+   - 2 helper functions for type conversion
+   - No raw SQL (100% sqlc-generated code)
+
+2. internal/session/postgres_test.go (283 lines)
+   - //go:build integration tag
+   - 12 test functions covering:
+     * CreateSession, GetSession, ListSessions
+     * AddMessage with/without tool_calls, with tool_call_id
+     * GetMessages with various scenarios
+     * Error cases (nonexistent sessions)
+   - Proper DB cleanup in teardown
+   - Skip if DATABASE_URL not set
+
+VERIFICATION RESULTS:
+✓ Build: go build ./internal/session/... → SUCCESS (no DB required)
+✓ Tests: Integration tests SKIP without DATABASE_URL
+✓ Methods: All 5 SessionStore methods implemented
+✓ SQL: No raw SQL strings (verified with grep)
+✓ Types: sqlc types don't leak (only in constructor parameter)
+✓ Evidence: task-8-pg-build.txt, task-8-pg-skip.txt saved
+
+METHOD MAPPING:
+CreateSession   → sqlc.CreateSession
+GetSession      → sqlc.GetSession (maps pgx.ErrNoRows → ErrSessionNotFound)
+ListSessions    → sqlc.ListSessions
+AddMessage      → sqlc.AddMessage
+GetMessages     → sqlc.GetMessagesBySession (with session existence check)
+
+TYPE CONVERSIONS:
+sqlc.Session   → session.Session   (via sqlcSessionToDomain)
+sqlc.Message   → session.Message   (via sqlcMessageToDomain)
+pgtype.Text    → string            (for optional tool_call_id)
+[]byte         → []ToolCall        (JSON marshal/unmarshal)
+pgtype.Timestamptz → time.Time
+
+STANDARDS COMPLIANCE:
+✓ Follows AGENTS.md conventions
+✓ Doc comments on all exported symbols
+✓ Import grouping: stdlib → external → internal
+✓ testify/assert used for assertions
+✓ Build tag for integration tests

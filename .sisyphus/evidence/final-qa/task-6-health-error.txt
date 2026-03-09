@@ -1,0 +1,11 @@
+=== RUN   TestHealthEndpoint
+--- PASS: TestHealthEndpoint (0.00s)
+=== RUN   TestServerStartStop
+2026/03/08 22:36:50 INFO starting gateway addr=127.0.0.1:19999
+2026/03/08 22:36:50 INFO stopping gateway
+2026/03/08 22:36:50 INFO gateway stopped
+--- PASS: TestServerStartStop (0.10s)
+=== RUN   TestGatewayCreation
+--- PASS: TestGatewayCreation (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/gateway	(cached)

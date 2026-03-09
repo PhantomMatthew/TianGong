@@ -1,0 +1,7 @@
+=== RUN   TestEmptyUserInput
+2026/03/09 01:23:22 INFO agent react iteration iteration=0 session_id=ab417ddc50628febb7e8d4cfccb720a2
+2026/03/09 01:23:22 INFO stream finished finish_reason=stop tool_calls=0
+2026/03/09 01:23:22 INFO agent completed successfully iterations=1
+--- PASS: TestEmptyUserInput (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	0.291s

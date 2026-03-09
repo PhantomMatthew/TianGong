@@ -1,0 +1,40 @@
+=== RUN   TestCreateSession
+--- PASS: TestCreateSession (0.00s)
+=== RUN   TestGetSession
+--- PASS: TestGetSession (0.00s)
+=== RUN   TestAddAndGetMessages
+--- PASS: TestAddAndGetMessages (0.01s)
+=== RUN   TestListSessions
+--- PASS: TestListSessions (0.03s)
+=== RUN   TestListSessionsEmpty
+--- PASS: TestListSessionsEmpty (0.00s)
+=== RUN   TestSessionIDUniqueness
+--- PASS: TestSessionIDUniqueness (0.00s)
+=== RUN   TestMessagePreservesOrder
+--- PASS: TestMessagePreservesOrder (0.00s)
+=== RUN   TestMessageIDGeneration
+--- PASS: TestMessageIDGeneration (0.00s)
+=== RUN   TestConcurrentAccess
+--- PASS: TestConcurrentAccess (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/session	0.866s
+=== RUN   TestCreateSession
+--- PASS: TestCreateSession (0.00s)
+=== RUN   TestGetSession
+--- PASS: TestGetSession (0.00s)
+=== RUN   TestAddAndGetMessages
+--- PASS: TestAddAndGetMessages (0.01s)
+=== RUN   TestListSessions
+--- PASS: TestListSessions (0.03s)
+=== RUN   TestListSessionsEmpty
+--- PASS: TestListSessionsEmpty (0.00s)
+=== RUN   TestSessionIDUniqueness
+--- PASS: TestSessionIDUniqueness (0.00s)
+=== RUN   TestMessagePreservesOrder
+--- PASS: TestMessagePreservesOrder (0.00s)
+=== RUN   TestMessageIDGeneration
+--- PASS: TestMessageIDGeneration (0.00s)
+=== RUN   TestConcurrentAccess
+--- PASS: TestConcurrentAccess (0.00s)
+=== RUN   TestPostgresStoreCreateSession
+    postgres_test.go:41: DATABASE_URL not set, skipping integration tests

@@ -1,0 +1,5 @@
+=== RUN   TestProviderError
+2026/03/09 01:23:23 INFO agent react iteration iteration=0 session_id=2d8861faab5d78c0733f820e74886154
+--- PASS: TestProviderError (0.00s)
+PASS
+ok  	github.com/PhantomMatthew/TianGong/internal/agent	0.288s

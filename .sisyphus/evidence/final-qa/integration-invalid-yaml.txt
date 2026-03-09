@@ -1,0 +1,7 @@
+Error: unknown flag: --config
+Usage:
+  tg config show [flags]
+
+Flags:
+  -h, --help   help for show
+

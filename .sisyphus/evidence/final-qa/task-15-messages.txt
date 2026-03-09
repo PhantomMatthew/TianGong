@@ -1,0 +1,15 @@
+=== RUN   TestBuildMessages
+--- PASS: TestBuildMessages (0.00s)
+=== RUN   TestBuildMessagesEmptyHistory
+--- PASS: TestBuildMessagesEmptyHistory (0.00s)
+=== RUN   TestBuildMessagesPreservesToolCalls
+--- PASS: TestBuildMessagesPreservesToolCalls (0.00s)
+=== RUN   TestBuildMessagesRoleMapping
+=== RUN   TestBuildMessagesRoleMapping/User_role
+=== RUN   TestBuildMessagesRoleMapping/Assistant_role
+=== RUN   TestBuildMessagesRoleMapping/System_role
+=== RUN   TestBuildMessagesRoleMapping/Tool_role
+--- PASS: TestBuildMessagesRoleMapping (0.00s)
+    --- PASS: TestBuildMessagesRoleMapping/User_role (0.00s)
+    --- PASS: TestBuildMessagesRoleMapping/Assistant_role (0.00s)
+    --- PASS: TestBuildMessagesRoleMapping/System_role (0.00s)

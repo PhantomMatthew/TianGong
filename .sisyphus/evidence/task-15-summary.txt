@@ -1,0 +1,57 @@
+TASK 15: System Prompt + Message Formatting — COMPLETE
+
+FILES CREATED:
+✓ internal/agent/prompt.go (57 lines)
+✓ internal/agent/prompt_test.go (199 lines)
+
+IMPLEMENTATION SUMMARY:
+
+1. DefaultSystemPrompt (const)
+   - Non-empty default system prompt
+   - Mentions tool use capability
+   - Clear, concise instructions for helpful AI assistant
+
+2. FormatSystemPrompt(custom string, tools []tool.Tool) string
+   - Uses custom prompt if provided, otherwise uses DefaultSystemPrompt
+   - Appends tool descriptions in format: "- tool_name: description"
+   - Handles empty tool slices correctly
+
+3. BuildMessages(systemPrompt string, history []*session.Message) []provider.Message
+   - Converts session.Message to provider.Message
+   - Prepends system message at index 0
+   - Maps session.MessageRole to provider.MessageRole (with cast)
+   - Converts session.ToolCall to provider.ToolCall arrays
+   - Preserves ToolCallID field
+
+TEST COVERAGE (9+ test functions):
+✓ TestDefaultSystemPrompt - verifies non-empty and mentions tools
+✓ TestFormatSystemPromptCustom - custom prompt replaces default
+✓ TestFormatSystemPromptDefault - default used when custom empty
+✓ TestFormatSystemPromptWithTools - tool descriptions appended
+✓ TestFormatSystemPromptEmptyTools - empty tools list doesn't modify prompt
+✓ TestBuildMessages - basic message conversion
+✓ TestBuildMessagesEmptyHistory - only system message for empty history
+✓ TestBuildMessagesPreservesToolCalls - tool calls and IDs preserved
+✓ TestBuildMessagesRoleMapping - all roles mapped correctly (user/assistant/system/tool)
+
+TEST RESULTS:
+All 9 test functions PASSED
+Test execution time: 0.736s
+
+BUILD VERIFICATION:
+✓ go build ./... — PASSED (no errors)
+✓ go vet ./internal/agent/... — PASSED (no issues)
+
+KEY IMPLEMENTATION DETAILS:
+- Type conversion: session.MessageRole → provider.MessageRole via cast
+- Type conversion: []session.ToolCall → []provider.ToolCall via iteration
+- Proper import grouping (stdlib → external → internal)
+- All exported symbols have doc comments
+- Uses testify/assert for assertions
+- Table-driven test for role mapping scenarios
+- Mock helper (mockTool) implements tool.Tool interface
+
+EVIDENCE SAVED:
+✓ .sisyphus/evidence/task-15-tests.txt - test output
+✓ .sisyphus/evidence/task-15-build.txt - build output (clean)
+✓ .sisyphus/evidence/task-15-summary.txt - this file

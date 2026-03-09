@@ -1,0 +1,32 @@
+$ TIANGONG_PROVIDERS_OPENAI_API_KEY=sk-secret123456789 TIANGONG_PROVIDERS_OPENAI_MODEL=gpt-4o \
+  TIANGONG_PROVIDERS_ANTHROPIC_API_KEY=sk-ant-secret123 TIANGONG_PROVIDERS_ANTHROPIC_MODEL=claude-3-sonnet \
+  ./bin/tg config show
+
+2026/03/09 00:43:04 INFO no config file found, using defaults and env vars
+providers:
+    anthropic:
+        name: anthropic
+        apikey: '***'
+        model: claude-3-sonnet
+        endpoint: ""
+        timeout: 0s
+    openai:
+        name: openai
+        apikey: '***'
+        model: gpt-4o
+        endpoint: ""
+        timeout: 0s
+server:
+    host: 127.0.0.1
+    port: 8080
+agent:
+    systemprompt: |-
+        You are a helpful AI assistant with access to tools.
+        Use tools when needed to accomplish tasks. Be concise and accurate.
+    maxiterations: 10
+    historylimit: 50
+    timeout: 30s
+database:
+    url: ""
+
+VERIFICATION: API keys are redacted (sk-secret123456789 and sk-ant-secret123 are NOT in output)

@@ -1,0 +1,30 @@
+=== RUN   TestNewOpenAI
+=== RUN   TestNewOpenAI/success_with_API_key
+=== RUN   TestNewOpenAI/default_model_when_not_specified
+=== RUN   TestNewOpenAI/error_when_API_key_missing
+--- PASS: TestNewOpenAI (0.00s)
+    --- PASS: TestNewOpenAI/success_with_API_key (0.00s)
+    --- PASS: TestNewOpenAI/default_model_when_not_specified (0.00s)
+    --- PASS: TestNewOpenAI/error_when_API_key_missing (0.00s)
+=== RUN   TestMapFinishReason
+=== RUN   TestMapFinishReason/stop
+=== RUN   TestMapFinishReason/tool_calls
+=== RUN   TestMapFinishReason/function_call_(legacy)
+=== RUN   TestMapFinishReason/length
+=== RUN   TestMapFinishReason/unknown_defaults_to_stop
+--- PASS: TestMapFinishReason (0.00s)
+    --- PASS: TestMapFinishReason/stop (0.00s)
+    --- PASS: TestMapFinishReason/tool_calls (0.00s)
+    --- PASS: TestMapFinishReason/function_call_(legacy) (0.00s)
+    --- PASS: TestMapFinishReason/length (0.00s)
+    --- PASS: TestMapFinishReason/unknown_defaults_to_stop (0.00s)
+=== RUN   TestOpenAIMessageMapping
+=== RUN   TestOpenAIMessageMapping/message_role_mapping
+=== RUN   TestOpenAIMessageMapping/tool_call_structure
+--- PASS: TestOpenAIMessageMapping (0.00s)
+    --- PASS: TestOpenAIMessageMapping/message_role_mapping (0.00s)
+    --- PASS: TestOpenAIMessageMapping/tool_call_structure (0.00s)
+=== RUN   TestOpenAIToolDefinitionMapping
+=== RUN   TestOpenAIToolDefinitionMapping/tool_definition_structure
+--- PASS: TestOpenAIToolDefinitionMapping (0.00s)
+    --- PASS: TestOpenAIToolDefinitionMapping/tool_definition_structure (0.00s)

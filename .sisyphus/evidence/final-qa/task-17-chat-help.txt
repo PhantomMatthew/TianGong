@@ -1,0 +1,16 @@
+TianGong CLI
+
+Usage:
+  tg [command]
+
+Available Commands:
+  chat        Start an interactive chat session
+  completion  Generate the autocompletion script for the specified shell
+  config      Manage TianGong configuration
+  help        Help about any command
+  version     Print the version number
+
+Flags:
+  -h, --help   help for tg
+
+Use "tg [command] --help" for more information about a command.

@@ -1,0 +1,10 @@
+--- PASS: TestCreateSession (0.00s)
+--- PASS: TestGetSession (0.00s)
+--- PASS: TestAddAndGetMessages (0.01s)
+--- PASS: TestListSessions (0.03s)
+--- PASS: TestListSessionsEmpty (0.00s)
+--- PASS: TestSessionIDUniqueness (0.00s)
+--- PASS: TestMessagePreservesOrder (0.00s)
+--- PASS: TestMessageIDGeneration (0.00s)
+--- PASS: TestConcurrentAccess (0.00s)
+PASS

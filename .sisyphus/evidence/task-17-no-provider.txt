@@ -1,0 +1,11 @@
+2026/03/09 00:40:18 INFO no config file found, using defaults and env vars
+Error: no provider configured (set TIANGONG_PROVIDERS_<NAME>_API_KEY)
+Usage:
+  tg chat [flags]
+
+Flags:
+      --continue string   Session ID to resume
+  -h, --help              help for chat
+      --model string      Model name (overrides provider default)
+      --provider string   Provider name (openai, anthropic, google)
+
