@@ -14,6 +14,7 @@ require (
 )
 
 require (
+	github.com/bwmarrin/discordgo v0.29.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
