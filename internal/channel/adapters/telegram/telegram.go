@@ -1,7 +1,8 @@
 // Package telegram provides a Telegram channel adapter using the Bot API.
 //
 // The adapter uses long-polling to receive messages and the Bot API to send
-// replies. It implements Adapter, Receiver, and Sender from the channel package.
+// replies. It implements Adapter, Receiver, Sender, TypingIndicator, and
+// ThreadBinder from the channel package.
 //
 // Configuration requires a bot token obtained from @BotFather. The token is
 // passed via ChannelConfig.Settings["token"].
@@ -334,4 +335,49 @@ func (a *Adapter) setRunning(v bool) {
 	a.mu.Lock()
 	a.running = v
 	a.mu.Unlock()
+}
+
+// SendTyping sends a typing indicator (chat action) to a Telegram chat.
+// It maps TypingAction to Telegram-specific chat actions.
+func (a *Adapter) SendTyping(_ context.Context, recipientID string, action channel.TypingAction) error {
+	a.mu.Lock()
+	bot := a.bot
+	a.mu.Unlock()
+
+	if bot == nil {
+		return fmt.Errorf("telegram bot not initialized (call Start first)")
+	}
+
+	chatID, err := parseChatID(recipientID)
+	if err != nil {
+		return fmt.Errorf("invalid recipient ID %q: %w", recipientID, err)
+	}
+
+	tgAction := mapTypingAction(action)
+	chatAction := tgbotapi.NewChatAction(chatID, tgAction)
+	_, err = bot.Request(chatAction)
+	if err != nil {
+		return fmt.Errorf("failed to send typing action: %w", err)
+	}
+
+	return nil
+}
+
+// BindThread returns the thread ID for a reply.
+// For group chats, Telegram uses the chat ID as the thread context.
+// For private chats, there is no thread — returns empty string.
+func (a *Adapter) BindThread(msg channel.InboundMessage) string {
+	return msg.ThreadID
+}
+
+// mapTypingAction converts a channel.TypingAction to a Telegram chat action string.
+func mapTypingAction(action channel.TypingAction) string {
+	switch action {
+	case channel.TypingActionUpload:
+		return tgbotapi.ChatUploadDocument
+	case channel.TypingActionRecording:
+		return tgbotapi.ChatRecordVoice
+	default:
+		return tgbotapi.ChatTyping
+	}
 }

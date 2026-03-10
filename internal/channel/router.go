@@ -116,7 +116,11 @@ func (r *Router) processMessage(ctx context.Context, msg InboundMessage) {
 		"channel", msg.ChannelType,
 		"sender", msg.SenderID,
 		"session", sessionID,
+		"thread", msg.ThreadID,
 	)
+
+	// Send typing indicator if the channel supports it
+	r.sendTyping(ctx, msg)
 
 	// Invoke the agent handler
 	response, err := r.handler(ctx, sessionID, msg.Content)
@@ -128,13 +132,18 @@ func (r *Router) processMessage(ctx context.Context, msg InboundMessage) {
 		response = "Sorry, I encountered an error processing your message."
 	}
 
-	// Send response back through the channel
+	// Build outbound message with thread binding
+	threadID := msg.ThreadID
+	if binder, ok := r.registry.GetThreadBinder(msg.ChannelName); ok {
+		threadID = binder.BindThread(msg)
+	}
+
 	outMsg := OutboundMessage{
 		Content:     response,
 		ChannelType: msg.ChannelType,
 		ChannelName: msg.ChannelName,
 		RecipientID: msg.SenderID,
-		ThreadID:    msg.ThreadID,
+		ThreadID:    threadID,
 		ReplyToID:   msg.ID,
 	}
 
@@ -165,4 +174,36 @@ func (r *Router) processMessage(ctx context.Context, msg InboundMessage) {
 		"recipient", msg.SenderID,
 		"session", sessionID,
 	)
+}
+
+// sendTyping sends a typing indicator if the channel supports it.
+// Errors are logged but not propagated — typing is best-effort.
+func (r *Router) sendTyping(ctx context.Context, msg InboundMessage) {
+	ti, ok := r.registry.GetTypingIndicator(msg.ChannelName)
+	if !ok {
+		return
+	}
+
+	recipientID := msg.SenderID
+	if msg.ThreadID != "" {
+		// For threaded channels, send typing to the thread/chat rather than the user.
+		recipientID = msg.ThreadID
+	}
+
+	if err := ti.SendTyping(ctx, recipientID, TypingActionTyping); err != nil {
+		slog.Warn("failed to send typing indicator",
+			"channel", msg.ChannelName,
+			"recipient", recipientID,
+			"error", err,
+		)
+		return
+	}
+
+	// Publish typing event
+	if r.eventBus != nil {
+		r.eventBus.Publish(ctx, bus.Event{
+			Type:    bus.EventTypingStarted,
+			Payload: msg,
+		})
+	}
 }

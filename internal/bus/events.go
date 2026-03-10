@@ -18,4 +18,7 @@ const (
 
 	// EventChannelConnected is emitted when a channel connects.
 	EventChannelConnected EventType = "channel.connected"
+
+	// EventTypingStarted is emitted when a typing indicator is sent.
+	EventTypingStarted EventType = "typing.started"
 )

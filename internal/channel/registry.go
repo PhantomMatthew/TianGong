@@ -18,8 +18,10 @@ type Registry struct {
 type registeredAdapter struct {
 	adapter  Adapter
 	config   ChannelConfig
-	receiver Receiver // nil if adapter doesn't implement Receiver
-	sender   Sender   // nil if adapter doesn't implement Sender
+	receiver Receiver        // nil if adapter doesn't implement Receiver
+	sender   Sender          // nil if adapter doesn't implement Sender
+	typing   TypingIndicator // nil if adapter doesn't implement TypingIndicator
+	threader ThreadBinder    // nil if adapter doesn't implement ThreadBinder
 }
 
 // NewRegistry creates a new empty channel registry.
@@ -30,7 +32,8 @@ func NewRegistry() *Registry {
 }
 
 // Register adds a channel adapter to the registry.
-// The adapter must implement Adapter; it may also implement Receiver, Sender, and/or StreamingSender.
+// The adapter must implement Adapter; it may also implement Receiver, Sender,
+// StreamingSender, TypingIndicator, and/or ThreadBinder.
 // Returns an error if an adapter with the same name is already registered.
 func (r *Registry) Register(adapter Adapter, cfg ChannelConfig) error {
 	r.mu.Lock()
@@ -56,6 +59,12 @@ func (r *Registry) Register(adapter Adapter, cfg ChannelConfig) error {
 	}
 	if send, ok := adapter.(Sender); ok {
 		reg.sender = send
+	}
+	if ti, ok := adapter.(TypingIndicator); ok {
+		reg.typing = ti
+	}
+	if tb, ok := adapter.(ThreadBinder); ok {
+		reg.threader = tb
 	}
 
 	r.adapters[name] = reg
@@ -86,6 +95,32 @@ func (r *Registry) GetSender(name string) (Sender, bool) {
 		return nil, false
 	}
 	return reg.sender, true
+}
+
+// GetTypingIndicator retrieves a TypingIndicator by channel name.
+// Returns nil, false if the channel doesn't exist or doesn't implement TypingIndicator.
+func (r *Registry) GetTypingIndicator(name string) (TypingIndicator, bool) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	reg, ok := r.adapters[name]
+	if !ok || reg.typing == nil {
+		return nil, false
+	}
+	return reg.typing, true
+}
+
+// GetThreadBinder retrieves a ThreadBinder by channel name.
+// Returns nil, false if the channel doesn't exist or doesn't implement ThreadBinder.
+func (r *Registry) GetThreadBinder(name string) (ThreadBinder, bool) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	reg, ok := r.adapters[name]
+	if !ok || reg.threader == nil {
+		return nil, false
+	}
+	return reg.threader, true
 }
 
 // List returns all registered adapter names and their types.

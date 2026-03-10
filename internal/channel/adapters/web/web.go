@@ -6,6 +6,7 @@
 //
 // Wire protocol message types:
 //   - "message": A complete text message (inbound or outbound)
+//   - "typing": A typing indicator (outbound only)
 //   - "stream_start": Begin a streaming response (outbound only)
 //   - "stream_delta": A text chunk in a streaming response (outbound only)
 //   - "stream_end": End a streaming response (outbound only)
@@ -533,4 +534,28 @@ func (s *wsStream) Close() error {
 		ID:   s.streamID,
 	}
 	return s.conn.writeJSON(wire)
+}
+
+// SendTyping sends a typing indicator to a specific WebSocket client.
+// The recipientID is the connection ID (e.g., "ws-1").
+func (a *Adapter) SendTyping(_ context.Context, recipientID string, action channel.TypingAction) error {
+	a.mu.RLock()
+	conn, ok := a.conns[recipientID]
+	running := a.running
+	a.mu.RUnlock()
+
+	if !running {
+		return fmt.Errorf("web adapter not running")
+	}
+	if !ok {
+		return fmt.Errorf("unknown connection %q", recipientID)
+	}
+
+	wire := WireMessage{
+		Type: "typing",
+		Metadata: map[string]string{
+			"action": string(action),
+		},
+	}
+	return conn.writeJSON(wire)
 }
