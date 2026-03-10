@@ -92,9 +92,14 @@ func (p *OpenAIProvider) Chat(ctx context.Context, req *ChatRequest) (*ChatRespo
 	if len(req.Tools) > 0 {
 		tools = make([]openai.ChatCompletionToolUnionParam, len(req.Tools))
 		for i, t := range req.Tools {
-			paramsJSON, _ := json.Marshal(t.Parameters)
+			paramsJSON, err := json.Marshal(t.Parameters)
+			if err != nil {
+				continue
+			}
 			var parameters shared.FunctionParameters
-			_ = json.Unmarshal(paramsJSON, &parameters) // Best effort
+			if err := json.Unmarshal(paramsJSON, &parameters); err != nil {
+				continue
+			}
 			tools[i] = openai.ChatCompletionFunctionTool(shared.FunctionDefinitionParam{
 				Name:        t.Name,
 				Description: param.NewOpt(t.Description),
@@ -209,9 +214,14 @@ func (p *OpenAIProvider) ChatStream(ctx context.Context, req *ChatRequest) (<-ch
 	if len(req.Tools) > 0 {
 		tools = make([]openai.ChatCompletionToolUnionParam, len(req.Tools))
 		for i, t := range req.Tools {
-			paramsJSON, _ := json.Marshal(t.Parameters)
+			paramsJSON, err := json.Marshal(t.Parameters)
+			if err != nil {
+				continue
+			}
 			var parameters shared.FunctionParameters
-			_ = json.Unmarshal(paramsJSON, &parameters) // Best effort
+			if err := json.Unmarshal(paramsJSON, &parameters); err != nil {
+				continue
+			}
 			tools[i] = openai.ChatCompletionFunctionTool(shared.FunctionDefinitionParam{
 				Name:        t.Name,
 				Description: param.NewOpt(t.Description),

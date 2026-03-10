@@ -73,5 +73,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	response := map[string]string{"status": "ok"}
-	_ = json.NewEncoder(w).Encode(response) // Best effort, error logged by HTTP server
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		slog.Error("failed to encode health response", "error", err)
+	}
 }
